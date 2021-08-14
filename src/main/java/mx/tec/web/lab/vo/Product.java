@@ -1,7 +1,18 @@
+/*
+ * Product
+ * Version 1.0
+ * August 14, 2021 
+ * Copyright 2021 Tecnologico de Monterrey
+ */
 package mx.tec.web.lab.vo;
 
 import java.util.List;
 
+/**
+ * Product Value Object to store the product attributtes
+ * @author Enrique Sanchez
+ * @version 1.0
+ */
 public class Product {
 	private String id;
 	private String name;
@@ -9,18 +20,19 @@ public class Product {
 	private List<Sku> childSkus;
 	
 	/**
-	 * 
+	 * No arguments constructor
 	 */
 	public Product() {
 	}
 
 	/**
-	 * @param id
-	 * @param name
-	 * @param description
-	 * @param childSkus
+	 * Constructor including all the properties
+	 * @param id Product id
+	 * @param name Product name
+	 * @param description Product description
+	 * @param childSkus List of Product Skus
 	 */
-	public Product(String id, String name, String description, List<Sku> childSkus) {
+	public Product(final String id, final String name, final String description, final List<Sku> childSkus) {
 		this.id = id;
 		this.name = name;
 		this.description = description;
@@ -37,7 +49,7 @@ public class Product {
 	/**
 	 * @param id the id to set
 	 */
-	public void setId(String id) {
+	public void setId(final String id) {
 		this.id = id;
 	}
 	
@@ -51,7 +63,7 @@ public class Product {
 	/**
 	 * @param name the name to set
 	 */
-	public void setName(String name) {
+	public void setName(final String name) {
 		this.name = name;
 	}
 	
@@ -65,7 +77,7 @@ public class Product {
 	/**
 	 * @param description the description to set
 	 */
-	public void setDescription(String description) {
+	public void setDescription(final String description) {
 		this.description = description;
 	}
 	
@@ -79,7 +91,7 @@ public class Product {
 	/**
 	 * @param childSkus the childSkus to set
 	 */
-	public void setChildSkus(List<Sku> childSkus) {
+	public void setChildSkus(final List<Sku> childSkus) {
 		this.childSkus = childSkus;
 	}
 }

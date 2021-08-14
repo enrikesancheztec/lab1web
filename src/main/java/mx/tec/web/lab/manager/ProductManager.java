@@ -1,5 +1,8 @@
-/**
- * 
+/*
+ * ProductManager
+ * Version 1.0
+ * August 14, 2021 
+ * Copyright 2021 Tecnologico de Monterrey
  */
 package mx.tec.web.lab.manager;
 
@@ -14,13 +17,18 @@ import mx.tec.web.lab.vo.Product;
 import mx.tec.web.lab.vo.Sku;
 
 /**
+ * The Product Manager with all the available business operations for the products
  * @author Enrique Sanchez
- *
+ * @version 1.0
  */
 @Service
 public class ProductManager {
+	/** List of products for testing purposes */
 	private List<Product> products;	
 	
+	/**
+	 * No argument constructor that creates the testing products
+	 */
 	public ProductManager() {
 		products = new ArrayList<>();
 		
@@ -42,10 +50,19 @@ public class ProductManager {
 		products.add(product2);		
 	}
 	
+	/**
+	 * Retrieve all the products
+	 * @return List of products
+	 */
 	public List<Product> getProducts() {
 		return products;
 	}
 
+	/**
+	 * Retrieve an specific product based on a given product id
+	 * @param id Product id
+	 * @return Optional containing a product if the product was found or empty otherwise
+	 */
 	public Optional<Product> getProduct(final String id) {
 		Optional<Product> foundProduct = Optional.empty();
 		
@@ -59,6 +76,11 @@ public class ProductManager {
 		return foundProduct;
 	}
 	
+	/**
+	 * Add a new Product to the product list based on a given product
+	 * @param newProduct Product to add
+	 * @return An Optional containing the new product
+	 */
 	public Optional<Product> addProduct(final Product newProduct) {
 		products.add(newProduct);
 		return Optional.of(newProduct);

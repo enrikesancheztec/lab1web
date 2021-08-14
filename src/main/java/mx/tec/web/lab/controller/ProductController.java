@@ -1,5 +1,8 @@
-/**
- * 
+/*
+ * ProductManager
+ * Version 1.0
+ * August 14, 2021 
+ * Copyright 2021 Tecnologico de Monterrey
  */
 package mx.tec.web.lab.controller;
 
@@ -20,14 +23,20 @@ import mx.tec.web.lab.manager.ProductManager;
 import mx.tec.web.lab.vo.Product;
 
 /**
+ * Product REST Controller
  * @author Enrique Sanchez
- *
+ * @version 1.0
  */
 @RestController
 public class ProductController {
+	/** A reference to the Product Manager */
 	@Resource
 	private ProductManager productManager;
 	
+	/**
+	 * The end point for GET {url}/products
+	 * @return a json list of all the products
+	 */
 	@GetMapping("/products")
 	public ResponseEntity<List<Product>> getProducts() {
 		List<Product> products = productManager.getProducts();
@@ -36,6 +45,11 @@ public class ProductController {
 		return responseEntity;
 	}	
 	
+	/**
+	 * The end point for GET {url}/products/{id}
+	 * @param id Product id
+	 * @return a json containing the product info and status 200 if the product is found or status 204 if the product is not found
+	 */
 	@GetMapping("/products/{id}")
 	public ResponseEntity<Product> getProduct(@PathVariable(value = "id") String id) {
 		ResponseEntity<Product> responseEntity = new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -49,11 +63,14 @@ public class ProductController {
 		return responseEntity;
 	}
 	
+	/**
+	 * The end point for POST {url}/products/
+	 * @param newProduct a json containing the info for the new product
+	 * @return If the product is created successfully then status 201 and the product info is returned, otherwise it returns status 400 
+	 */
 	@PostMapping("/products")
 	public ResponseEntity<Product> addProduct(@RequestBody Product newProduct) {
 		ResponseEntity<Product> responseEntity = new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-		
-		System.out.println("newProduct.id " + newProduct.getId());
 		
 		Optional<Product> product = productManager.addProduct(newProduct);
 		
