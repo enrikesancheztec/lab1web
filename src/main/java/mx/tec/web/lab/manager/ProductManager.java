@@ -84,5 +84,30 @@ public class ProductManager {
 	public Optional<Product> addProduct(final Product newProduct) {
 		products.add(newProduct);
 		return Optional.of(newProduct);
+	}
+	
+	/**
+	 * Delete the product based on a given product
+	 * @param existingProduct The product to delete
+	 */
+	public void deleteProduct(final Product existingProduct) {
+		products.remove(existingProduct);
+	}
+	
+	/**
+	 * Update an existing product based on a given modified product and a product id
+	 * @param id The product id for the original product
+	 * @param modifiedProduct The product new version
+	 */
+	public void updateProduct(final String id, final Product modifiedProduct) {
+		final Optional<Product> existingProduct = getProduct(id);
+		
+		if (existingProduct.isPresent()) {
+			final Product product = existingProduct.get();
+			product.setId(modifiedProduct.getId());
+			product.setName(modifiedProduct.getName());
+			product.setDescription(modifiedProduct.getDescription());
+			product.setChildSkus(modifiedProduct.getChildSkus());
+		}
 	}		
 }

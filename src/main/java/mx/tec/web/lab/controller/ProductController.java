@@ -13,9 +13,11 @@ import javax.annotation.Resource;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -40,7 +42,6 @@ public class ProductController {
 	@GetMapping("/products")
 	public ResponseEntity<List<Product>> getProducts() {
 		List<Product> products = productManager.getProducts();
-		
 		ResponseEntity<List<Product>> responseEntity = new ResponseEntity<>(products, HttpStatus.OK);
 		return responseEntity;
 	}	
@@ -53,7 +54,6 @@ public class ProductController {
 	@GetMapping("/products/{id}")
 	public ResponseEntity<Product> getProduct(@PathVariable(value = "id") String id) {
 		ResponseEntity<Product> responseEntity = new ResponseEntity<>(HttpStatus.NO_CONTENT);
-		
 		Optional<Product> product = productManager.getProduct(id);
 		
 		if (product.isPresent()) {
@@ -71,7 +71,6 @@ public class ProductController {
 	@PostMapping("/products")
 	public ResponseEntity<Product> addProduct(@RequestBody Product newProduct) {
 		ResponseEntity<Product> responseEntity = new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-		
 		Optional<Product> product = productManager.addProduct(newProduct);
 		
 		if (product.isPresent()) {
@@ -79,5 +78,42 @@ public class ProductController {
 		}
 		
 		return responseEntity;
-	}	
+	}
+
+	/**
+	 * The end point for PUT {url}/products/{id}
+	 * @param id Product id
+	 * @param modifiedProduct a json containing the info for the modified product
+	 * @return status 200 if the product is found and updated or status 204 if the product is not found
+	 */
+	@PutMapping("/products/{id}")
+	public ResponseEntity<Product> updateProduct(@PathVariable(value = "id") String id, @RequestBody Product modifiedProduct) {
+		ResponseEntity<Product> responseEntity = new ResponseEntity<>(HttpStatus.NO_CONTENT);
+		Optional<Product> product = productManager.getProduct(id);
+		
+		if (product.isPresent()) {
+			productManager.updateProduct(id, modifiedProduct);
+			responseEntity = new ResponseEntity<>(HttpStatus.OK);
+		}
+		
+		return responseEntity;
+	}
+
+	/**
+	 * The end point for DELETE {url}/products/{id}
+	 * @param id Product id
+	 * @return status 200 if the product is found and deleted or status 204 if the product is not found
+	 */
+	@DeleteMapping("/products/{id}")
+	public ResponseEntity<Product> deleteProduct(@PathVariable(value = "id") String id) {
+		ResponseEntity<Product> responseEntity = new ResponseEntity<>(HttpStatus.NO_CONTENT);
+		Optional<Product> product = productManager.getProduct(id);
+		
+		if (product.isPresent()) {
+			productManager.deleteProduct(product.get());
+			responseEntity = new ResponseEntity<>(HttpStatus.OK);
+		}
+		
+		return responseEntity;
+	}		
 }
